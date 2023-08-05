@@ -25,7 +25,7 @@ public class Course extends BaseEntity{
     @Column(nullable = false, length = 150)
     private String location;
     @OneToOne
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "id_user_instructor", nullable = false)
     private User instructor;
     @Enumerated(value = EnumType.STRING)
     private CourseStatus courseStatus;

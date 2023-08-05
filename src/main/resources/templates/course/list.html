@@ -11,7 +11,7 @@
     <div class="main-wrapper">
         <div class="row">
             <div class="col">
-                <a th:href="@{/users/form}">
+                <a th:href="@{/course/form}">
                     <button type="button" class="btn btn-primary m-b-xs">
                         <span class="btn-label"><i class="fa fa-plus"></i></span>
                         Add Course
@@ -25,54 +25,42 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Heading</th>
-                                    <th scope="col">Heading</th>
-                                    <th scope="col">Heading</th>
-                                    <th scope="col">Heading</th>
-                                    <th scope="col">Heading</th>
-                                    <th scope="col">Heading</th>
-                                    <th scope="col">Heading</th>
-                                    <th scope="col">Heading</th>
-                                    <th scope="col">Heading</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Instructor</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Schedules</th>
+                                    <th scope="col">Participants</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
-                                    <td>Cell</td>
+                                <tr th:each="c : ${courses}">
+                                    <td th:text="${c.name}">Cell</td>
+                                    <td th:text="${c.description}">Cell</td>
+                                    <td th:text="${c.instructor.fullName}">Cell</td>
+                                    <td th:text="${c.location}">Cell</td>
+                                    <td>
+                                        <a href="#">
+                                            <button class="btn btn-primary waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#">
+                                            <button class="btn btn-info waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
+                                        </a>
+                                    </td>
+                                    <td th:text="${c.courseStatus}">Cell</td>
+                                    <td>
+                                        <a href="#">
+                                            <button class="btn btn-warning waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Edit</span> </button>
+                                        </a>
+                                        <a href="#">
+                                            <button class="btn btn-danger waves-effect"> <i class="mdi mdi-trash-can mr-1"></i> <span>Delete</span> </button>
+                                        </a>
+
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

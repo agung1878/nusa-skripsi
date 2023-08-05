@@ -4,7 +4,8 @@
         layout:decorate="~{layout}" th:with="activeTitle='Course',activeTab='COURSE'">
 <head>
     <div layout:fragment="customCss">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js" integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     </div>
 </head>
 <body>
@@ -16,33 +17,33 @@
                     <div class="card-body">
                         <h5 class="card-title">Disabled forms</h5>
                         <p class="card-description">Add the <code>disabled</code> boolean attribute on an input to prevent user interactions and make it appear lighter.</p>
-                        <form>
+                        <form th:action="@{/course/form}" th:object="${dto}" method="post">
                             <fieldset>
                                 <div class="mb-3">
                                     <label for="disabledTextInput" class="form-label">Course Name</label>
-                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="Course Name">
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Course Name" th:field="*{name}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="disabledTextInput" class="form-label">Description</label>
-                                    <textarea rows="3" type="text" id="disabledTextInput" class="form-control" placeholder="Description"/>
+                                    <textarea rows="3" type="text" id="description" name="description" class="form-control" placeholder="Description" th:field="*{description}"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="disabledTextInput" class="form-label">Schedule</label>
-                                    <textarea rows="3" type="text" id="disabledTextInput" class="form-control date" placeholder="Schedule"/>
+                                    <input type="text" id="dates" name="dates" class="form-control date" placeholder="Schedule" th:field="*{dates}"/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="disabledTextInput" class="form-label">Time</label>
+                                    <input type="text" id="time" name="time" class="form-control time" placeholder="Time" th:field="*{time}"/>
                                 </div>
                                 <div class="mb-3">
                                     <label for="disabledSelect" class="form-label">Instructor</label>
-                                    <select id="disabledSelect" class="form-select">
-                                        <option>-- Instructor --</option>
+                                    <select id="disabledSelect" class="form-select" th:field="*{instructor}">
+                                        <option th:each="i : ${instructors}" th:value="${i.id}" th:text="${i.fullName}"></option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" disabled>
-                                        <label class="form-check-label" for="disabledFieldsetCheck">
-                                            Can't check this
-                                        </label>
-                                    </div>
+                                    <label for="disabledTextInput" class="form-label">Location Address</label>
+                                    <textarea rows="3" type="text" id="location" name="location" class="form-control" placeholder="Location Address" th:field="*{location}"></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </fieldset>
@@ -51,15 +52,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div layout:fragment="customScript">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script>
-            $('.date').datepicker({
-                multidate: true,
-                format: 'dd-mm-yyyy'
-            });
-        </script>
     </div>
 </div>
 </body>
