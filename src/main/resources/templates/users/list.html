@@ -1,0 +1,65 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with="activeTitle='Users',activeTab='USERS'">
+<head>
+  <div layout:fragment="customCss">
+  </div>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="main-wrapper">
+    <div class="row">
+      <div class="col">
+        <a th:href="@{/users/form}">
+          <button type="button" class="btn btn-primary m-b-xs">
+            <span class="btn-label"><i class="fa fa-plus"></i></span>
+            Add User
+          </button>
+        </a>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Management User</h5>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                <tr>
+                  <th scope="col">FullName</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone Number</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="u : ${users}">
+                  <td th:text="${u.fullName}">Cell</td>
+                  <td th:text="${u.username}">Cell</td>
+                  <td th:text="${u.role.name}">Cell</td>
+                  <td th:text="${u.email}">Cell</td>
+                  <td th:text="${u.mobilePhone}">Cell</td>
+                  <td>
+                    <a href="#">
+                      <button class="btn btn-warning waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Edit</span> </button>
+                    </a>
+                    <a href="#">
+                      <button class="btn btn-danger waves-effect"> <i class="mdi mdi-trash-can mr-1"></i> <span>Delete</span> </button>
+                    </a>
+
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.content -->
+    </div>
+  </div>
+
+  <div layout:fragment="customScript"></div>
+</div>
+</body>
+</html>

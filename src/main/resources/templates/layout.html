@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <div th:include="fragments/head :: head" th:remove="tag">Head</div>
+    <div layout:fragment="customCss" th:remove="tag"></div>
+</head>
+<body>
+<div class='loader'>
+    <div class='spinner-grow text-primary' role='status'>
+        <span class='sr-only'>Loading...</span>
+    </div>
+</div>
+<div class="page-container">
+    <!-- Navbar -->
+    <div th:include="fragments/header :: header" th:remove="tag">Header</div>
+    <!-- /.navbar -->
+    <!-- Sidebar -->
+    <div th:include="fragments/sidebar :: sidebar" th:remove="tag">Sidebar</div>
+    <!-- /.sidebar -->
+
+    <div class="page-content">
+        <div layout:fragment="content" th:remove="tag"></div>
+    </div>
+</div>
+
+<div th:include="fragments/script :: script" th:remove="tag">Footer</div>
+<div layout:fragment="customScript" th:remove="tag"></div>
+</body>
+</html>

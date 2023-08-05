@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <body>
+    <div th:fragment="sidebar">
+        <div class="page-sidebar">
+            <ul class="list-unstyled accordion-menu">
+                <li class="sidebar-title">
+                    Main
+                </li>
+                <li th:classappend="${activeTab  == 'DASHBOARD' ? 'active-page' : ''}">
+                    <a th:href="@{/dashboard}"><i data-feather="home"></i>Dashboard</a>
+                </li>
+                <li class="sidebar-title">
+                    Apps
+                </li>
+                <li sec:authorize="hasAuthority('MANAGEMENT_COURSE_VIEW')" th:classappend="${activeTab  == 'USERS' ? 'active-page' : ''}">
+                    <a th:href="@{/users/list}"><i data-feather="inbox"></i>Users</a>
+                </li>
+                <li sec:authorize="hasAuthority('MANAGEMENT_COURSE_VIEW')" th:classappend="${activeTab  == 'COURSE' ? 'active-page' : ''}">
+                    <a th:href="@{/course/list}"><i data-feather="inbox"></i>Course</a>
+                </li>
+                <li>
+                    <a href="email.html"><i data-feather="inbox"></i>My Courses</a>
+                </li>
+                <li>
+                    <a href="calendar.html"><i data-feather="calendar"></i>My Schedule</a>
+                </li>
+                <li>
+                    <a href="social.html"><i data-feather="user"></i>Quiz</a>
+                </li>
+                <li>
+                <a href="file-manager.html"><i data-feather="message-circle"></i>E - Certificate</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </body>
+</html>
