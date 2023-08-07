@@ -29,9 +29,9 @@
                                     <th scope="col">Description</th>
                                     <th scope="col">Instructor</th>
                                     <th scope="col">Location</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Schedules</th>
                                     <th scope="col">Participants</th>
-                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
@@ -41,17 +41,17 @@
                                     <td th:text="${c.description}">Cell</td>
                                     <td th:text="${c.instructor.fullName}">Cell</td>
                                     <td th:text="${c.location}">Cell</td>
-                                    <td>
-                                        <a href="#">
-                                            <button class="btn btn-primary waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="#">
-                                            <button class="btn btn-info waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
-                                        </a>
-                                    </td>
                                     <td th:text="${c.courseStatus}">Cell</td>
+                                    <td>
+                                        <a href="#">
+                                            <button class="btn btn-primary waves-effect" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#">
+                                            <button class="btn btn-info waves-effect" data-bs-toggle="modal" data-bs-target="#ModalSchedules"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
+                                        </a>
+                                    </td>
                                     <td>
                                         <a href="#">
                                             <button class="btn btn-warning waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Edit</span> </button>
@@ -69,6 +69,71 @@
                 </div>
             </div>
             <!-- /.content -->
+            <!-- .modal schedules-->
+            <div class="modal fade" id="ModalSchedules" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <h5 class="card-title">Responsive tables</h5>
+                                <p class="card-description">Responsive tables allow tables to be scrolled horizontally with ease. Make any table responsive across all viewports by wrapping a <code>.table</code> with <code>.table-responsive</code>. Or, pick a maximum breakpoint with which to have a responsive table up to by using <code>.table-responsive{-sm|-md|-lg|-xl|-xxl}</code>.</p>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Course</th>
+                                            <th scope="col">Datetime</th>
+                                            <th scope="col">Instructor</th>
+                                            <th scope="col">Location</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Schedules</th>
+                                            <th scope="col">Participants</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="c : ${courses}">
+                                            <td th:text="${c.name}">Cell</td>
+                                            <td th:text="${c.description}">Cell</td>
+                                            <td th:text="${c.instructor.fullName}">Cell</td>
+                                            <td th:text="${c.location}">Cell</td>
+                                            <td th:text="${c.courseStatus}">Cell</td>
+                                            <td>
+                                                <a href="#">
+                                                    <button class="btn btn-primary waves-effect" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="#">
+                                                    <button class="btn btn-info waves-effect" data-bs-toggle="modal" data-bs-target="#ModalSchedules"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="#">
+                                                    <button class="btn btn-warning waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Edit</span> </button>
+                                                </a>
+                                                <a href="#">
+                                                    <button class="btn btn-danger waves-effect"> <i class="mdi mdi-trash-can mr-1"></i> <span>Delete</span> </button>
+                                                </a>
+
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

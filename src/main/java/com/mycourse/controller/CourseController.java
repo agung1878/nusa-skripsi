@@ -2,6 +2,7 @@ package com.mycourse.controller;
 
 import com.mycourse.dao.CourseDao;
 import com.mycourse.dao.RoleDao;
+import com.mycourse.dao.ScheduleDao;
 import com.mycourse.dao.UserDao;
 import com.mycourse.dto.CourseDto;
 import com.mycourse.entity.Role;
@@ -24,6 +25,7 @@ public class CourseController {
     @Autowired private UserDao userDao;
     @Autowired private RoleDao roleDao;
     @Autowired private CourseDao courseDao;
+    @Autowired private ScheduleDao scheduleDao;
     @Autowired private CourseServices services;
     @GetMapping("/list")
     public String getListCourse(ModelMap modelMap){

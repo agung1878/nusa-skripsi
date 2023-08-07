@@ -20,8 +20,4 @@ public class Schedule extends BaseEntity{
     @DateTimeFormat(pattern = "dd-MM-yyy HH:mm:ss")
     private LocalDateTime localDateTime;
 
-    public enum Attendance{
-
-    }
-
 }
