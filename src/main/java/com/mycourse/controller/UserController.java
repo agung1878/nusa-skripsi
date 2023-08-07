@@ -23,7 +23,7 @@ public class UserController {
     @GetMapping("/list")
     public String getUsers(ModelMap modelMap){
         modelMap.addAttribute("users", userDao.findAll());
-        return "/users/list";
+        return "users/list";
     }
 
     @GetMapping("/form")
@@ -32,7 +32,7 @@ public class UserController {
         modelMap.addAttribute("user", new RegisDto());
         modelMap.addAttribute("roles", roleDao.findAll());
 
-        return "/users/form";
+        return "users/form";
     }
 
     @PostMapping("/form")

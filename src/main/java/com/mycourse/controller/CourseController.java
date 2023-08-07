@@ -32,7 +32,7 @@ public class CourseController {
 
         modelMap.addAttribute("courses", courseDao.findAll());
 
-        return "/course/list";
+        return "course/list";
     }
 
     @GetMapping("/form")
@@ -42,7 +42,7 @@ public class CourseController {
         modelMap.addAttribute("dto", new CourseDto());
         modelMap.addAttribute("instructors", userDao.findAllByRole(role.get()));
 
-        return "/course/form";
+        return "course/form";
     }
 
     @PostMapping("/form")
