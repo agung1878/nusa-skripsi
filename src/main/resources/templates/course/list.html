@@ -134,7 +134,7 @@
         $('.schedules').on('click', function(){
             let id = $(this).data('id')
             console.log('id = ',id)
-            $.get("http://localhost:8080/rest/schedules?id="+id )
+            $.get("https://www.lotuscourses.online/rest/schedules?id="+id )
                 .done(function( data ) {
                     $("#tableSchedules").find("tbody").empty();
                     var event_data = '';
@@ -154,7 +154,7 @@
         $('.participants').on('click', function(){
             let id = $(this).data('id')
             console.log('id = ',id)
-            $.get("http://localhost:8080/rest/participants?id="+id )
+            $.get("https://www.lotuscourses.online/rest/participants?id="+id )
                 .done(function( data ) {
                     $("#tableParticipants").find("tbody").empty();
                     var event_data = '';
