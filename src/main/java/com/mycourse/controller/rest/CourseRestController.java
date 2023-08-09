@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequestMapping("/rest")
+@CrossOrigin
 public class CourseRestController {
 
     @Autowired private CourseServices services;
