@@ -1,0 +1,147 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with="activeTitle='Course',activeTab='COURSE'">
+<head>
+    <div layout:fragment="customCss">
+    </div>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h2>Invoice</h2>
+                            </div>
+                            <div class="col-4">
+                                <h4 class="float-end">#511</h4>
+                            </div>
+                        </div>
+                        <div class="invoice-details">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="info">Date:</p>
+                                    <p>Jan 8, 2021</p>
+                                </div>
+                                <div class="col">
+                                    <p class="info">ID:</p>
+                                    <p>IO237</p>
+                                </div>
+                                <div class="col">
+                                    <p class="info">Invoice to:</p>
+                                    <p>John Doe, New York</p>
+                                    <p>5025 Collwood Blvd, apt. 2314</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table invoice-table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Client</th>
+                                        <th scope="col">Issued Date</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Handle</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">3311</th>
+                                        <td><img src="../../assets/images/avatars/profile-image.png" alt=""> Nina Doe</td>
+                                        <td>11 APR 2021</td>
+                                        <td>$3223</td>
+                                        <td><span class="badge bg-primary">Delivered</span></td>
+                                        <td>
+                                            <a href="#"><i data-feather="edit"></i></a>
+                                            <a href="#"><i data-feather="eye"></i></a>
+                                            <a href="#"><i data-feather="more-vertical"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2331</th>
+                                        <td><img src="../../assets/images/avatars/profile-image.png" alt=""> John Doe</td>
+                                        <td>7 APR 2021</td>
+                                        <td>$3422</td>
+                                        <td><span class="badge bg-info">Declined</span></td>
+                                        <td>
+                                            <a href="#"><i data-feather="edit"></i></a>
+                                            <a href="#"><i data-feather="eye"></i></a>
+                                            <a href="#"><i data-feather="more-vertical"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2344</th>
+                                        <td><img src="../../assets/images/avatars/profile-image.png" alt=""> Jacob Doe</td>
+                                        <td>7 APR 2021</td>
+                                        <td>$2415</td>
+                                        <td><span class="badge bg-primary">Delivered</span></td>
+                                        <td>
+                                            <a href="#"><i data-feather="edit"></i></a>
+                                            <a href="#"><i data-feather="eye"></i></a>
+                                            <a href="#"><i data-feather="more-vertical"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2345</th>
+                                        <td><img src="../../assets/images/avatars/profile-image.png" alt=""> Nina Doe</td>
+                                        <td>20 MAR 2021</td>
+                                        <td>$3034</td>
+                                        <td><span class="badge bg-warning">Processing</span></td>
+                                        <td>
+                                            <a href="#"><i data-feather="edit"></i></a>
+                                            <a href="#"><i data-feather="eye"></i></a>
+                                            <a href="#"><i data-feather="more-vertical"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2355</th>
+                                        <td><img src="../../assets/images/avatars/profile-image.png" alt=""> John Doe</td>
+                                        <td>20 MAR 2021</td>
+                                        <td>$4337</td>
+                                        <td><span class="badge bg-success">Delivered</span></td>
+                                        <td>
+                                            <a href="#"><i data-feather="edit"></i></a>
+                                            <a href="#"><i data-feather="eye"></i></a>
+                                            <a href="#"><i data-feather="more-vertical"></i></a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row invoice-last">
+                            <div class="col-9">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut ante id elit molestie<br>dapibus id sollicitudin vel, luctus sit amet justo</p>
+                            </div>
+                            <div class="col-3">
+                                <div class="invoice-info">
+                                    <form th:action="@{/course/invoice}" method="post">
+                                        <input type="hidden" name="id" th:value="${course.id}">
+                                        <p>Subtotal <span>$1700</span></p>
+                                        <p>Discount <span>$30</span></p>
+                                        <p>Tax <span>20%</span></p>
+                                        <p class="bold">Total <span>$1336</span></p>
+                                        <div class="d-grid gap-2">
+                                            <button class="btn btn-danger m-t-xs" type="submit">Confirm Payment</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div layout:fragment="customScript"></div>
+</div>
+</body>
+</html>

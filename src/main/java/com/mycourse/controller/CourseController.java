@@ -15,7 +15,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller @RequestMapping("/course")
@@ -31,7 +33,6 @@ public class CourseController {
     public String getListCourse(ModelMap modelMap){
 
         modelMap.addAttribute("courses", courseDao.findAll());
-
         return "course/list";
     }
 
@@ -51,5 +52,19 @@ public class CourseController {
         services.saveCourse(courseDto);
 
         return "redirect:/course/list";
+    }
+
+    @GetMapping("/invoice")
+    public String getInvoiceCourse(@RequestParam String id, ModelMap modelMap){
+
+        modelMap.addAttribute("course", courseDao.findById(id).get());
+
+        return "course/invoice";
+    }
+
+    @PostMapping("/invoice")
+    public String addParticipants(@RequestParam String id, Principal principal){
+        services.addParticipants(id, principal);
+        return "redirect:/dashboard";
     }
 }

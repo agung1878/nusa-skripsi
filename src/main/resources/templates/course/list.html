@@ -43,14 +43,10 @@
                                     <td th:text="${c.location}">Cell</td>
                                     <td th:text="${c.courseStatus}">Cell</td>
                                     <td>
-                                        <a href="#">
-                                            <button class="btn btn-primary waves-effect" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
-                                        </a>
+                                        <button class="btn btn-primary waves-effect schedules" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable" th:attr="data-id=${c.id}"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
                                     </td>
                                     <td>
-                                        <a href="#">
-                                            <button class="btn btn-info waves-effect" data-bs-toggle="modal" data-bs-target="#ModalSchedules"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
-                                        </a>
+                                        <button class="btn btn-info waves-effect participants" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable" th:attr="data-id=${c.id}"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
                                     </td>
                                     <td>
                                         <a href="#">
@@ -71,58 +67,54 @@
             <!-- /.content -->
             <!-- .modal schedules-->
             <div class="modal fade" id="ModalSchedules" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-dialog mw-100 w-50 modal-dialog-scrollable modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalScrollableTitle">Schedule Course</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="card-body">
-                                <h5 class="card-title">Responsive tables</h5>
-                                <p class="card-description">Responsive tables allow tables to be scrolled horizontally with ease. Make any table responsive across all viewports by wrapping a <code>.table</code> with <code>.table-responsive</code>. Or, pick a maximum breakpoint with which to have a responsive table up to by using <code>.table-responsive{-sm|-md|-lg|-xl|-xxl}</code>.</p>
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table class="table" id="tableSchedules">
                                         <thead>
                                         <tr>
                                             <th scope="col">Course</th>
                                             <th scope="col">Datetime</th>
-                                            <th scope="col">Instructor</th>
-                                            <th scope="col">Location</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Schedules</th>
-                                            <th scope="col">Participants</th>
-                                            <th scope="col">Action</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr th:each="c : ${courses}">
-                                            <td th:text="${c.name}">Cell</td>
-                                            <td th:text="${c.description}">Cell</td>
-                                            <td th:text="${c.instructor.fullName}">Cell</td>
-                                            <td th:text="${c.location}">Cell</td>
-                                            <td th:text="${c.courseStatus}">Cell</td>
-                                            <td>
-                                                <a href="#">
-                                                    <button class="btn btn-primary waves-effect" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <button class="btn btn-info waves-effect" data-bs-toggle="modal" data-bs-target="#ModalSchedules"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="#">
-                                                    <button class="btn btn-warning waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Edit</span> </button>
-                                                </a>
-                                                <a href="#">
-                                                    <button class="btn btn-danger waves-effect"> <i class="mdi mdi-trash-can mr-1"></i> <span>Delete</span> </button>
-                                                </a>
-
-                                            </td>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- .modal participants-->
+            <div class="modal fade" id="ModalParticipants" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog mw-100 w-50 modal-dialog-scrollable modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalScrollableTitle">Course Participants</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table" id="tableParticipants">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Phone Number</th>
                                         </tr>
-                                        </tbody>
+                                        </thead>
+                                        <tbody></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -136,8 +128,49 @@
             </div>
         </div>
     </div>
-
-<div layout:fragment="customScript"></div>
+</div>
+<div layout:fragment="customScript">
+    <script>
+        $('.schedules').on('click', function(){
+            let id = $(this).data('id')
+            console.log('id = ',id)
+            $.get("http://localhost:8080/rest/schedules?id="+id )
+                .done(function( data ) {
+                    $("#tableSchedules").find("tbody").empty();
+                    var event_data = '';
+                    $.each(data.data, function(index, value){
+                        /*console.log(value);*/
+                        event_data += '<tr>';
+                        event_data += '<td>'+value.courseName+'</td>';
+                        event_data += '<td>'+value.datetime+'</td>';
+                        event_data += '</tr>';
+                    });
+                    $("#tableSchedules").append(event_data);
+                    $('#ModalSchedules').modal('show');
+                });
+        })
+    </script>
+    <script>
+        $('.participants').on('click', function(){
+            let id = $(this).data('id')
+            console.log('id = ',id)
+            $.get("http://localhost:8080/rest/participants?id="+id )
+                .done(function( data ) {
+                    $("#tableParticipants").find("tbody").empty();
+                    var event_data = '';
+                    $.each(data.data, function(index, value){
+                        /*console.log(value);*/
+                        event_data += '<tr>';
+                        event_data += '<td>'+value.user.fullName+'</td>';
+                        event_data += '<td>'+value.user.email+'</td>';
+                        event_data += '<td>'+value.user.mobilePhone+'</td>';
+                        event_data += '</tr>';
+                    });
+                    $("#tableParticipants").append(event_data);
+                    $('#ModalParticipants').modal('show');
+                });
+        })
+    </script>
 </div>
 </body>
 </html>
