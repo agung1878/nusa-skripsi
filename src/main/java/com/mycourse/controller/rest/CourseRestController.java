@@ -5,10 +5,7 @@ import com.mycourse.services.CourseServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -18,6 +15,7 @@ public class CourseRestController {
     @Autowired private CourseServices services;
 
     @GetMapping("/schedules")
+    @CrossOrigin
     public ResponseEntity<BaseResponseDto> getSchedules(@RequestParam String id){
         BaseResponseDto response = new BaseResponseDto();
         try {
@@ -36,6 +34,7 @@ public class CourseRestController {
     }
 
     @GetMapping("/participants")
+    @CrossOrigin
     public ResponseEntity<BaseResponseDto> getParticipants(@RequestParam String id){
         BaseResponseDto response = new BaseResponseDto();
         try {
