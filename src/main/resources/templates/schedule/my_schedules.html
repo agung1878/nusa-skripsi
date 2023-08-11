@@ -1,0 +1,65 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with="activeTitle='MySchedules',activeTab='MYSCHEDULES'">
+<head>
+    <div layout:fragment="customCss">
+        <link th:href="@{/assets/plugins/fullcalendar/main.min.css}" rel="stylesheet">
+    </div>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div id='calendar'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <!-- /.content -->
+</div>
+<div layout:fragment="customScript">
+    <script th:src="@{/assets/plugins/fullcalendar/main.min.js}"></script>
+    <script>
+
+        let events = [];
+        document.addEventListener('DOMContentLoaded', function() {
+
+            $.ajax({
+                url: 'http://localhost:8080/rest/my_schedules',
+                type: 'get',
+                success: function(data){
+                    $.each(data.data, function(index, value){
+                        /*console.log(value);*/
+                        events.push({title: value.title, start: value.date, allDay: false})
+                    });
+                    console.log('events 1 : ' + events.toString())
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        eventTimeFormat: {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: false
+                        },
+                        initialView: 'dayGridMonth',
+                        events: events
+                    });
+                    calendar.render();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+                    $('#content_blank').html(errorMsg);
+                }
+            });
+        });
+
+    </script>
+</div>
+</body>
+</html>

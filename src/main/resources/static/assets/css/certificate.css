@@ -1,0 +1,54 @@
+#bannerProp {
+    width: 75px;
+    height: 918px;
+}
+
+.header-large{
+    font-size: 350%;
+    font-weight: 600;
+
+}
+
+.light-bold {
+    font-weight: 500;
+    font-size: 13px;
+}
+
+
+.medium-font{
+    font-size: 15px!important;
+}
+
+.margin-prop{
+    margin-bottom: 20px;
+}
+
+#logoProp {
+    width: 85px;
+    height: 75px;
+}
+
+#certifyPos{
+    margin-top: 7px !important;
+    font-size: 12px;
+}
+
+#footerLogo {
+    height: 40px;
+}
+
+#hospLogo {
+    height: 55px;
+}
+
+#signLogo {
+    width: 350px;
+}
+
+#smallFont {
+    font-size: 60%;
+}
+
+#specMargin {
+    margin-bottom: 10px;
+}

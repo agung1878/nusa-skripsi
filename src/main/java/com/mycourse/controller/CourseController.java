@@ -67,4 +67,12 @@ public class CourseController {
         services.addParticipants(id, principal);
         return "redirect:/dashboard";
     }
+
+    @GetMapping("/my_course")
+    public String getMyCourse(ModelMap modelMap, Principal principal){
+
+        modelMap.addAttribute("courses", services.myCourse(principal));
+
+        return "course/my_course";
+    }
 }

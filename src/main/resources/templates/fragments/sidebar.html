@@ -20,16 +20,16 @@
                     <a th:href="@{/course/list}"><i data-feather="inbox"></i>Course</a>
                 </li>
                 <li>
-                    <a href="email.html"><i data-feather="inbox"></i>My Courses</a>
+                    <a th:href="@{/course/my_course}" th:classappend="${activeTab  == 'MYCOURSE' ? 'active-page' : ''}"><i data-feather="inbox"></i>My Courses</a>
                 </li>
                 <li>
-                    <a href="calendar.html"><i data-feather="calendar"></i>My Schedule</a>
+                    <a th:href="@{/schedule/my_schedules}" th:classappend="${activeTab  == 'MYSCHEDULES' ? 'active-page' : ''}"><i data-feather="calendar"></i>My Schedule</a>
                 </li>
                 <li>
                     <a href="social.html"><i data-feather="user"></i>Quiz</a>
                 </li>
                 <li>
-                <a href="file-manager.html"><i data-feather="message-circle"></i>E - Certificate</a>
+                <a th:href="@{/e_certificate}"><i data-feather="message-circle"></i>E - Certificate</a>
                 </li>
             </ul>
         </div>

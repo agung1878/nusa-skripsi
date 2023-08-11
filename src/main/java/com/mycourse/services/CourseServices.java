@@ -101,4 +101,18 @@ public class CourseServices {
         return participants;
     }
 
+    public List<Course> myCourse(Principal principal){
+       List<Course> courses = new ArrayList<>();
+       User user = userDao.findByUsername(principal.getName()).get();
+
+       List<Participant> participants = participantDao.findByUser(user);
+
+       for (Participant p : participants){
+           courses.add(p.getCourse());
+       }
+
+       return courses;
+
+    }
+
 }
