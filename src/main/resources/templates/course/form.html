@@ -28,6 +28,11 @@
                                     <textarea rows="3" type="text" id="description" name="description" class="form-control" placeholder="Description" th:field="*{description}"></textarea>
                                 </div>
                                 <div class="mb-3">
+                                    <label for="disabledTextInput" class="form-label">Syllabus</label>
+                                    <input type="hidden" id="syllabus" name="syllabus" th:value="${syllabus.id}">
+                                    <input type="text" class="form-control date" th:value="${syllabus.name}" disabled/>
+                                </div>
+                                <div class="mb-3">
                                     <label for="disabledTextInput" class="form-label">Schedule</label>
                                     <input type="text" id="dates" name="dates" class="form-control date" placeholder="Schedule" th:field="*{dates}"/>
                                 </div>
@@ -45,6 +50,8 @@
                                     <label for="disabledTextInput" class="form-label">Location Address</label>
                                     <textarea rows="3" type="text" id="location" name="location" class="form-control" placeholder="Location Address" th:field="*{location}"></textarea>
                                 </div>
+                                <button class="btn btn-success" id="add_member" type="button" style="margin-bottom: 10px;"><i class="fa fa-plus"> Add Member</i></button>
+                                <div class="new-member"></div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </fieldset>
                         </form>
@@ -53,6 +60,33 @@
             </div>
         </div>
     </div>
+</div>
+<div layout:fragment="customScript">
+    <script type="text/javascript">
+        $("#add_member").click(function () {
+            let currentRows = $(".row-member").length
+            if(currentRows == null) currentRows = 0
+
+            console.log('current rows = ',currentRows)
+
+            newRowAddMember =
+                '<div class="row-member" data-index="'+currentRows+'"> ' +
+                '<div class="input-group mb-3">' +
+                '<input type="text" class="form-control" placeholder="Member Name" aria-label="Member Name" aria-describedby="basic-addon2" id="memberCourses['+currentRows+'].name" name="memberCourses['+currentRows+'].name">' +
+                '<input type="text" class="form-control" placeholder="Member Position" aria-label="Member Position" aria-describedby="basic-addon2" id="memberCourses['+currentRows+'].position" name="memberCourses['+currentRows+'].position">' +
+                '<button class="btn btn-danger remove-member" data-member="'+currentRows+'" type="button"><i class="fa fa-trash"></i></button>' +
+                '</div>' +
+                '</div>';
+
+            $('.new-member').append(newRowAddMember);
+        });
+
+        $("form").on("click", ".remove-member", function(e){
+            let currentMember = $(this).data('member')
+            console.log('currentMember', currentMember)
+            $('.row-member[data-index='+currentMember+']').remove();
+        });
+    </script>
 </div>
 </body>
 </html>

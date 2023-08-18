@@ -7,15 +7,31 @@ create table course
     record_status      varchar(255) not null,
     updated            timestamp(6),
     updated_by         varchar(255),
-    course_status      varchar(255),
     description        varchar(255) not null,
     location           varchar(150) not null,
     name               varchar(100) not null,
+    proposer           varchar(100) not null,
+    status             varchar(255),
     id_user_instructor varchar(36)  not null,
+    id_syllabus        varchar(36),
     primary key (id)
 );
 
-create table participant
+create table detail_syllabus
+(
+    id                 varchar(36)  not null,
+    created            timestamp(6) not null,
+    created_by         varchar(255) not null,
+    deleted            bigint,
+    record_status      varchar(255) not null,
+    updated            timestamp(6),
+    updated_by         varchar(255),
+    name               varchar(255),
+    id_header_syllabus varchar(36),
+    primary key (id)
+);
+
+create table header_syllabus
 (
     id            varchar(36)  not null,
     created       timestamp(6) not null,
@@ -24,9 +40,55 @@ create table participant
     record_status varchar(255) not null,
     updated       timestamp(6),
     updated_by    varchar(255),
-    paid_payment  boolean      not null,
+    name          varchar(255),
+    id_syllabus   varchar(36),
+    primary key (id)
+);
+
+create table invoice
+(
+    id             varchar(36)  not null,
+    created        timestamp(6) not null,
+    created_by     varchar(255) not null,
+    deleted        bigint,
+    record_status  varchar(255) not null,
+    updated        timestamp(6),
+    updated_by     varchar(255),
+    invoice_number varchar(255),
+    paid           boolean      not null,
+    total          numeric(38, 2),
+    id_course      varchar(36),
+    primary key (id)
+);
+
+create table member_course
+(
+    id            varchar(36)  not null,
+    created       timestamp(6) not null,
+    created_by    varchar(255) not null,
+    deleted       bigint,
+    record_status varchar(255) not null,
+    updated       timestamp(6),
+    updated_by    varchar(255),
+    name          varchar(255),
+    position      varchar(255),
     id_course     varchar(36),
-    id_user       varchar(36),
+    primary key (id)
+);
+
+create table presence
+(
+    id                  varchar(36)  not null,
+    created             timestamp(6) not null,
+    created_by          varchar(255) not null,
+    deleted             bigint,
+    record_status       varchar(255) not null,
+    updated             timestamp(6),
+    updated_by          varchar(255),
+    present             boolean      not null,
+    id_course           varchar(36),
+    id_user_participant varchar(36),
+    id_schedule         varchar(36),
     primary key (id)
 );
 
@@ -104,57 +166,18 @@ create table schedule
     primary key (id)
 );
 
-
-
-alter table if exists s_permission
-    add constraint unq_permission_value unique (value, deleted);
-
-
-
-alter table if exists s_role
-    add constraint unq_role_code unique (code, deleted);
-
-
-
-alter table if exists s_user
-    add constraint unq_user_username unique (username, deleted);
-
-alter table if exists course
-    add constraint FKivt2mof4sjob4f8574nxoxov3
-    foreign key (id_user_instructor)
-    references s_user;
-
-alter table if exists participant
-    add constraint FKjtptbkatpco5lj4bx5e2t3yt9
-    foreign key (id_course)
-    references course;
-
-alter table if exists participant
-    add constraint FKhapaf0ct4lfl0c9s3qbg2ryj9
-    foreign key (id_user)
-    references s_user;
-
-alter table if exists s_role_permission
-    add constraint FKctdvc3x67tpy90xh905iiautx
-    foreign key (id_permission)
-    references s_permission;
-
-alter table if exists s_role_permission
-    add constraint FK9cj7fdg3hf41td1n0vebmfa5x
-    foreign key (id_role)
-    references s_role;
-
-alter table if exists s_user
-    add constraint FK1kphta9tu0hpdoes1eq9dygdk
-    foreign key (id_s_role)
-    references s_role;
-
-alter table if exists s_user_password
-    add constraint FKjvlbjysmuhinjxdwp48je04wg
-    foreign key (id_s_user)
-    references s_user;
-
-alter table if exists schedule
-    add constraint FKrmvag562fnoc08wxh64bv58e5
-    foreign key (id_course)
-    references course;
+create table syllabus
+(
+    id            varchar(36)  not null,
+    created       timestamp(6) not null,
+    created_by    varchar(255) not null,
+    deleted       bigint,
+    record_status varchar(255) not null,
+    updated       timestamp(6),
+    updated_by    varchar(255),
+    description   varchar(255),
+    name          varchar(255),
+    ppn           float(53)    not null,
+    price         numeric(38, 2),
+    primary key (id)
+);

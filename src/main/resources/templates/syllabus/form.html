@@ -1,0 +1,110 @@
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}" th:with="activeTitle='Syllabus',activeTab='SYLLABUS'">
+<head>
+    <div layout:fragment="customCss">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    </div>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="main-wrapper">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Disabled forms</h5>
+                        <p class="card-description">Add the <code>disabled</code> boolean attribute on an input to prevent user interactions and make it appear lighter.</p>
+                        <form th:action="@{/syllabus/form}" th:object="${syllabus}" method="post">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label for="disabledTextInput" class="form-label">Syllabus Name</label>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Syllabus Name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="disabledTextInput" class="form-label">Description</label>
+                                    <textarea rows="3" type="text" id="description" name="description" class="form-control" placeholder="Description"></textarea>
+                                </div>
+                                <button class="btn btn-success" id="add_header" type="button" style="margin-bottom: 10px;"><i class="fa fa-plus"> Add Header</i></button>
+                                <div class="newHeader"></div>
+                                <div class="mb-3">
+                                    <label for="disabledTextInput" class="form-label">Price</label>
+                                    <input type="text" id="price" name="price" class="form-control" placeholder="Price" th:field="*{price}">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="disabledTextInput" class="form-label">PPN</label>
+                                    <input type="text" id="ppn" name="ppn" class="form-control" placeholder="PPN" th:field="*{ppn}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="customScript">
+    <script type="text/javascript">
+        $("#add_header").click(function () {
+            let currentRows = $(".row-header").length
+            if(currentRows == null) currentRows = 0
+
+            console.log('current rows = ',currentRows)
+
+            newRowAddHeader =
+                '<div class="row-header" data-index="'+currentRows+'"> ' +
+                '<div class="input-group mb-3">' +
+                '<input type="text" class="form-control" placeholder="Header" aria-label="Header" aria-describedby="basic-addon2" id="headerSyllabusList['+currentRows+'].name" name="headerSyllabusList['+currentRows+'].name">' +
+                '<button class="btn btn-danger remove-header" data-header="'+currentRows+'" type="button"><i class="fa fa-trash"></i></button>' +
+                '<button class="btn btn-success add-detail" data-header="'+currentRows+'" type="button"><i class="fa fa-plus"> Add Detail</i></button>' +
+                '</div>' +
+                '<div class="header-detail" data-header="'+currentRows+'"></div>' +
+                '</div>';
+
+            $('.newHeader').append(newRowAddHeader);
+        });
+
+        $("form").on("click", ".remove-header", function(e){
+            let currentHeader = $(this).data('header')
+            console.log('currentHeader', currentHeader)
+            $('.row-header[data-index='+currentHeader+']').remove();
+        });
+
+        $("body").on("click", ".add-detail", function () {
+            let currentHeader = $(this).data('header')
+            let currentRows = $(".row-detail[data-header="+currentHeader+"]").length
+            if(currentRows == null) currentRows = 0
+
+            console.log('current header = ',currentHeader)
+            console.log('current rows = ',currentRows)
+
+            newRowAddDetail =
+                '<div class="row-detail" data-header="'+currentHeader+'" data-index="'+currentRows+'"> ' +
+                '<div class="input-group mb-3" style="margin-left: 20px;">' +
+                '<input type="text" class="form-control" placeholder="Detail" aria-label="Detail" aria-describedby="basic-addon2" ' +
+                'id="headerSyllabusList['+currentHeader+'].detailSyllabusList['+currentRows+'].name" name="headerSyllabusList['+currentHeader+'].detailSyllabusList['+currentRows+'].name">' +
+                '<button class="btn btn-danger remove-detail" data-header="'+currentHeader+'" data-index="'+currentRows+'" type="button"><i class="fa fa-trash"></i></button>' +
+                '</div>' +
+                '</div>'+
+                '</div>';
+            $('.row-header[data-index='+currentHeader+']').append(newRowAddDetail);
+
+        });
+
+        $("form").on("click", ".remove-detail", function (e) {
+            let currentHeader = $(this).data('header')
+            let currentRows = $(".row-detail[data-header="+currentHeader+"]").length-1
+            if(currentRows == null) currentRows = 0
+            if (currentRows == -1) currentRows = 0
+            console.log('remove currentHeader', currentHeader)
+            console.log('remove currentRow', currentRows)
+            $('.row-detail[data-header='+currentHeader+']'+' [data-index='+currentRows+']').remove();
+        });
+
+    </script>
+</div>
+</body>
+</html>

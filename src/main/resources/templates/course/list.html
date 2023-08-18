@@ -1,6 +1,6 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
         layout:decorate="~{layout}" th:with="activeTitle='Course',activeTab='COURSE'">
 <head>
     <div layout:fragment="customCss">
@@ -41,7 +41,7 @@
                                     <td th:text="${c.description}">Cell</td>
                                     <td th:text="${c.instructor.fullName}">Cell</td>
                                     <td th:text="${c.location}">Cell</td>
-                                    <td th:text="${c.courseStatus}">Cell</td>
+                                    <td th:text="${c.status}">Cell</td>
                                     <td>
                                         <button class="btn btn-primary waves-effect schedules" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable" th:attr="data-id=${c.id}"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
                                     </td>
@@ -49,13 +49,13 @@
                                         <button class="btn btn-info waves-effect participants" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable" th:attr="data-id=${c.id}"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
                                     </td>
                                     <td>
+                                        <button class="btn btn-success waves-effect btn-sm btn-approve" th:attr="data-id=${c.id}"> <i class="mdi mdi-check-bold mr-1">Approve</i> </button>
                                         <a href="#">
                                             <button class="btn btn-warning waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Edit</span> </button>
                                         </a>
                                         <a href="#">
                                             <button class="btn btn-danger waves-effect"> <i class="mdi mdi-trash-can mr-1"></i> <span>Delete</span> </button>
                                         </a>
-
                                     </td>
                                 </tr>
                                 </tbody>
@@ -134,7 +134,7 @@
         $('.schedules').on('click', function(){
             let id = $(this).data('id')
             console.log('id = ',id)
-            $.get("https://www.lotuscourses.online/rest/schedules?id="+id )
+            $.get("http://localhost:8080/rest/schedules?id="+id )
                 .done(function( data ) {
                     $("#tableSchedules").find("tbody").empty();
                     var event_data = '';
@@ -154,7 +154,7 @@
         $('.participants').on('click', function(){
             let id = $(this).data('id')
             console.log('id = ',id)
-            $.get("https://www.lotuscourses.online/rest/participants?id="+id )
+            $.get("http://localhost:8080/rest/participants?id="+id )
                 .done(function( data ) {
                     $("#tableParticipants").find("tbody").empty();
                     var event_data = '';
@@ -169,6 +169,41 @@
                     $("#tableParticipants").append(event_data);
                     $('#ModalParticipants').modal('show');
                 });
+        })
+    </script>
+    <script>
+        $('.btn-approve').on('click', function(){
+            let id = $(this).data('id')
+            console.log('id = ',id)
+            swal.fire({
+                title: "Are you sure?",
+                text: "You will approve this course!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#19be44",
+                confirmButtonText: "Yes, approve it!"
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "http://localhost:8080/rest/course/approve?id="+id,
+                        type: "POST",
+                        data: {
+
+                        },
+                        dataType: "json",
+                        success: function () {
+                            swal.fire({title: "Done!", text: "Task was successfully approved!", type:
+                                    "success"}).then(function(){
+                                    location.reload();
+                                }
+                            );
+                        },
+                        error: function () {
+                            swal.fire("Error approving!", "Please try again", "error");
+                        }
+                    });
+                }
+            });
         })
     </script>
 </div>

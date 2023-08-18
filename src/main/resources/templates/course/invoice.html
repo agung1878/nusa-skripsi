@@ -15,102 +15,40 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-8">
-                                <h2>Invoice</h2>
-                            </div>
-                            <div class="col-4">
-                                <h4 class="float-end">#511</h4>
+                                <h2 th:text="${course.name + ' - Invoice'}"></h2>
                             </div>
                         </div>
                         <div class="invoice-details">
                             <div class="row">
                                 <div class="col">
                                     <p class="info">Date:</p>
-                                    <p>Jan 8, 2021</p>
+                                    <p th:text="${date}">Jan 8, 2021</p>
                                 </div>
                                 <div class="col">
-                                    <p class="info">ID:</p>
-                                    <p>IO237</p>
+                                    <p class="info">Syllabus:</p>
+                                    <p th:text="${course.syllabus.name}">IO237</p>
                                 </div>
                                 <div class="col">
                                     <p class="info">Invoice to:</p>
-                                    <p>John Doe, New York</p>
-                                    <p>5025 Collwood Blvd, apt. 2314</p>
+                                    <p th:text="${user.fullName}">John Doe, New York</p>
+                                    <p th:text="${user.address}">5025 Collwood Blvd, apt. 2314</p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="table-responsive">
+                                <h5 class="card-title">Participants</h5>
                                 <table class="table invoice-table">
                                     <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Client</th>
-                                        <th scope="col">Issued Date</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Handle</th>
-                                        <th scope="col">Actions</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Position</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row">3311</th>
-                                        <td><img src="../../assets/images/avatars/profile-image.png" alt=""> Nina Doe</td>
-                                        <td>11 APR 2021</td>
-                                        <td>$3223</td>
-                                        <td><span class="badge bg-primary">Delivered</span></td>
-                                        <td>
-                                            <a href="#"><i data-feather="edit"></i></a>
-                                            <a href="#"><i data-feather="eye"></i></a>
-                                            <a href="#"><i data-feather="more-vertical"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2331</th>
-                                        <td><img src="../../assets/images/avatars/profile-image.png" alt=""> John Doe</td>
-                                        <td>7 APR 2021</td>
-                                        <td>$3422</td>
-                                        <td><span class="badge bg-info">Declined</span></td>
-                                        <td>
-                                            <a href="#"><i data-feather="edit"></i></a>
-                                            <a href="#"><i data-feather="eye"></i></a>
-                                            <a href="#"><i data-feather="more-vertical"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2344</th>
-                                        <td><img src="../../assets/images/avatars/profile-image.png" alt=""> Jacob Doe</td>
-                                        <td>7 APR 2021</td>
-                                        <td>$2415</td>
-                                        <td><span class="badge bg-primary">Delivered</span></td>
-                                        <td>
-                                            <a href="#"><i data-feather="edit"></i></a>
-                                            <a href="#"><i data-feather="eye"></i></a>
-                                            <a href="#"><i data-feather="more-vertical"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2345</th>
-                                        <td><img src="../../assets/images/avatars/profile-image.png" alt=""> Nina Doe</td>
-                                        <td>20 MAR 2021</td>
-                                        <td>$3034</td>
-                                        <td><span class="badge bg-warning">Processing</span></td>
-                                        <td>
-                                            <a href="#"><i data-feather="edit"></i></a>
-                                            <a href="#"><i data-feather="eye"></i></a>
-                                            <a href="#"><i data-feather="more-vertical"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2355</th>
-                                        <td><img src="../../assets/images/avatars/profile-image.png" alt=""> John Doe</td>
-                                        <td>20 MAR 2021</td>
-                                        <td>$4337</td>
-                                        <td><span class="badge bg-success">Delivered</span></td>
-                                        <td>
-                                            <a href="#"><i data-feather="edit"></i></a>
-                                            <a href="#"><i data-feather="eye"></i></a>
-                                            <a href="#"><i data-feather="more-vertical"></i></a>
-                                        </td>
+                                    <tr th:each="m : ${course.memberCourses}">
+                                        <td th:text="${m.name}">11 APR 2021</td>
+                                        <td th:text="${m.position}">$3223</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -122,14 +60,13 @@
                             </div>
                             <div class="col-3">
                                 <div class="invoice-info">
-                                    <form th:action="@{/course/invoice}" method="post">
-                                        <input type="hidden" name="id" th:value="${course.id}">
-                                        <p>Subtotal <span>$1700</span></p>
-                                        <p>Discount <span>$30</span></p>
-                                        <p>Tax <span>20%</span></p>
-                                        <p class="bold">Total <span>$1336</span></p>
+                                    <form th:action="@{/invoice}" method="post">
+                                        <p>Subtotal <span th:text="'Rp. '+${#numbers.formatDecimal(course.syllabus.price, 1, 'POINT', 0, 'COMMA')}">$1700</span></p>
+                                        <p>Discount <span>-</span></p>
+                                        <p>Tax <span th:text="${course.syllabus.ppn + '%'}"></span></p>
+                                        <p class="bold">Total <span th:text="'Rp. '+${#numbers.formatDecimal(totalPrice, 1, 'POINT', 0, 'COMMA')}">$1336</span></p>
                                         <div class="d-grid gap-2">
-                                            <button class="btn btn-danger m-t-xs" type="submit">Confirm Payment</button>
+                                            <button class="btn btn-danger m-t-xs btn-invoice" th:attr="data-id=${course.id}" type="submit">Confirm Payment</button>
                                         </div>
                                     </form>
                                 </div>
@@ -141,7 +78,43 @@
         </div>
     </div>
 
-    <div layout:fragment="customScript"></div>
+</div>
+<div layout:fragment="customScript">
+    <script>
+        $('.btn-invoice').on('click', function(){
+            let id = $(this).data('id')
+            console.log('id = ',id)
+            swal.fire({
+                title: "Are you sure?",
+                text: "You will confirm this payment?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#19be44",
+                confirmButtonText: "Yes!"
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "http://localhost:8080/rest/course/invoice?id="+id,
+                        type: "POST",
+                        data: {
+
+                        },
+                        dataType: "json",
+                        success: function () {
+                            swal.fire({title: "Done!", text: "Success purchasing course!", type:
+                                    "success"}).then(function(){
+                                window.location = "http://localhost:8080/course/mycourse";
+                                }
+                            );
+                        },
+                        error: function () {
+                            swal.fire("Error approving!", "Please try again", "error");
+                        }
+                    });
+                }
+            });
+        })
+    </script>
 </div>
 </body>
 </html>

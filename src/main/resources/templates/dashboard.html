@@ -4,77 +4,79 @@
         layout:decorate="~{layout}" th:with="activeTitle='Dashboard',activeTab='DASHBOARD'">
 <head>
     <div layout:fragment="customCss">
+        <link th:href="@{/assets/landing/aos/aos.css}" rel="stylesheet">
+        <link th:href="@{/assets/css/pricing.css}" rel="stylesheet">
+        <style>
+            .card {
+                border: none;
+                padding: 10px 50px;
+            }
+
+            .card::after {
+                position: absolute;
+                z-index: -1;
+                opacity: 0;
+                -webkit-transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+                transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            }
+
+            .card:hover {
+
+                transform: scale(1.02, 1.02);
+                -webkit-transform: scale(1.02, 1.02);
+                backface-visibility: hidden;
+                will-change: transform;
+                box-shadow: 0 1rem 3rem rgba(0, 0, 0, .75) !important;
+            }
+
+            .card:hover::after {
+                opacity: 1;
+            }
+
+            .card:hover .btn-outline-primary {
+                color: white;
+                background: #007bff;
+            }
+
+        </style>
     </div>
 </head>
 <body>
 <div layout:fragment="content">
     <div class="main-wrapper">
-        <div class="row">
-            <div class="col-md-6 col-xl-3">
-                <div class="card stat-widget">
+        <div class="row" th:each="s : ${syllabus}">
+            <div class="col-lg-4 col-md-12 mb-4">
+                <div class="card h-100 shadow-lg">
                     <div class="card-body">
-                        <h5 class="card-title">Available Courses</h5>
-                        <h2 th:text="${availableCourses.size()}">132</h2>
-                        <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ModalAvailableCourses"> <i class="fa fa-info-circle"></i>  </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="ModalAvailableCourses" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog mw-100 w-50 modal-dialog-scrollable modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalScrollableTitle">Available Courses</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">Course</th>
-                                        <th scope="col">Datetime</th>
-                                        <th scope="col">Instructor</th>
-                                        <th scope="col">Location</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Schedules</th>
-                                        <th scope="col">Participants</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="c : ${availableCourses}">
-                                        <td th:text="${c.name}">Cell</td>
-                                        <td th:text="${c.description}">Cell</td>
-                                        <td th:text="${c.instructor.fullName}">Cell</td>
-                                        <td th:text="${c.location}">Cell</td>
-                                        <td th:text="${c.courseStatus}">Cell</td>
-                                        <td>
-                                            <a href="#">
-                                                <button class="btn btn-primary waves-effect" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="#">
-                                                <button class="btn btn-info waves-effect" data-bs-toggle="modal" data-bs-target="#ModalSchedules"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a th:href="@{/course/invoice(id=${c.id})}">
-                                                <button class="btn btn-info waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Join</span> </button>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="text-center p-3">
+                            <h5 class="card-title" th:text="${s.name}"></h5>
+                            <br>
+                            <span class="h2" th:text="'Rp. '+${#numbers.formatDecimal(s.price, 1, 'POINT', 0, 'COMMA')}">$8</span>
+                            <br><br>
                         </div>
+                        <p class="card-text" th:text="${s.description}">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                    <ul class="list-group list-group-flush" th:each="h : ${s.headerSyllabusList}">
+                        <li class="list-group-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-check" viewBox="0 0 16 16">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                            </svg>
+                            <th:block th:text="${h.name}"></th:block>
+                            <ul class="list-group list-group-flush" th:each="d : ${h.detailSyllabusList}">
+                                <li class="list-group-item">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-check" viewBox="0 0 16 16">
+                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                    </svg>
+                                    <th:block th:text="${d.name}"></th:block>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="card-body text-center">
+                        <a th:href="@{/course/form(id=${s.id})}"><button class="btn btn-outline-primary btn-lg" style="border-radius:30px">Select</button></a>
                     </div>
                 </div>
             </div>
@@ -83,5 +85,6 @@
     <!-- /.content -->
 </div>
 <div layout:fragment="customScript"></div>
+<script th:src="@{/assets/landing/aos/aos.js}"></script>
 </body>
 </html>

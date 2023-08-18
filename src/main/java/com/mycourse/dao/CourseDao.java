@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CourseDao extends CrudRepository<Course, String> {
 
-    List<Course> findAllByCourseStatus(Course.CourseStatus courseStatus);
     List<Course> findByInstructor(User user);
+    List<Course> findByClient(User client);
 
 }

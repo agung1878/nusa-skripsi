@@ -42,13 +42,6 @@ $(document).ready(function () {
         }    
     }
 
-    var chart1 = new ApexCharts(
-        document.querySelector("#apex1"),
-        options1
-    );
-
-    chart1.render();
-
     var options2 = {
         series: [{
             name: 'Series 1',
@@ -106,6 +99,4 @@ $(document).ready(function () {
         }
     };
 
-    var chart2 = new ApexCharts(document.querySelector("#apex2"), options2);
-    chart2.render();
 });

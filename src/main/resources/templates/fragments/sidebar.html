@@ -14,7 +14,10 @@
                     Apps
                 </li>
                 <li sec:authorize="hasAuthority('MANAGEMENT_COURSE_VIEW')" th:classappend="${activeTab  == 'USERS' ? 'active-page' : ''}">
-                    <a th:href="@{/users/list}"><i data-feather="inbox"></i>Users</a>
+                    <a th:href="@{/users/list}"><i data-feather="user"></i>Users</a>
+                </li>
+                <li sec:authorize="hasAuthority('MANAGEMENT_COURSE_VIEW')" th:classappend="${activeTab  == 'SYLLABUS' ? 'active-page' : ''}">
+                    <a th:href="@{/syllabus/list}"><i data-feather="inbox"></i>Syllabus</a>
                 </li>
                 <li sec:authorize="hasAuthority('MANAGEMENT_COURSE_VIEW')" th:classappend="${activeTab  == 'COURSE' ? 'active-page' : ''}">
                     <a th:href="@{/course/list}"><i data-feather="inbox"></i>Course</a>
@@ -24,9 +27,6 @@
                 </li>
                 <li>
                     <a th:href="@{/schedule/my_schedules}" th:classappend="${activeTab  == 'MYSCHEDULES' ? 'active-page' : ''}"><i data-feather="calendar"></i>My Schedule</a>
-                </li>
-                <li>
-                    <a href="social.html"><i data-feather="user"></i>Quiz</a>
                 </li>
                 <li>
                 <a th:href="@{/e_certificate}"><i data-feather="message-circle"></i>E - Certificate</a>

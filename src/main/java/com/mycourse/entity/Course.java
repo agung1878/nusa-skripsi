@@ -14,23 +14,32 @@ public class Course extends BaseEntity{
 
     @Column(nullable = false, length = 100)
     private String name;
+    @OneToOne
+    @JoinColumn(name = "id_client")
+    private User client;
     @Column(nullable = false)
     private String description;
+    @OneToOne
+    @JoinColumn(name = "id_syllabus")
+    private Syllabus syllabus;
     @OneToMany(mappedBy = "course")
     @JsonBackReference
     private List<Schedule> schedules = new ArrayList<>();
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonBackReference
-    private List<Participant> participants = new ArrayList<>();
+    private List<MemberCourse> memberCourses = new ArrayList<>();
     @Column(nullable = false, length = 150)
     private String location;
     @OneToOne
     @JoinColumn(name = "id_user_instructor", nullable = false)
     private User instructor;
-    @Enumerated(value = EnumType.STRING)
-    private CourseStatus courseStatus;
-    public enum CourseStatus{
-        AVAILABLE, GOING_ON, CLOSED
+    @OneToOne
+    @JoinColumn(name = "id_invoice")
+    private Invoice invoice;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    public enum Status {
+        WAITING, APPROVED, REJECTED
     }
 
 }

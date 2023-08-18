@@ -1,7 +1,7 @@
 <html
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{layout}" th:with="activeTitle='MyCourse',activeTab='MYCOURSE'">
+        layout:decorate="~{layout}" th:with="activeTitle='Syllabus',activeTab='SYLLABUS'">
 <head>
     <div layout:fragment="customCss">
     </div>
@@ -11,10 +11,10 @@
     <div class="main-wrapper">
         <div class="row">
             <div class="col">
-                <a th:href="@{/course/form}">
+                <a th:href="@{/syllabus/form}">
                     <button type="button" class="btn btn-primary m-b-xs">
                         <span class="btn-label"><i class="fa fa-plus"></i></span>
-                        Request Private Course
+                        Add Syllabus
                     </button>
                 </a>
                 <div class="card">
@@ -27,34 +27,23 @@
                                 <tr>
                                     <th scope="col">Name</th>
                                     <th scope="col">Description</th>
-                                    <th scope="col">Instructor</th>
-                                    <th scope="col">Location</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Schedules</th>
-                                    <th scope="col">Participants</th>
+                                    <th scope="col">Price</th>
                                     <th scope="col">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="c : ${courses}">
-                                    <td th:text="${c.name}">Cell</td>
-                                    <td th:text="${c.description}">Cell</td>
-                                    <td th:text="${c.instructor.fullName}">Cell</td>
-                                    <td th:text="${c.location}">Cell</td>
-                                    <td th:text="${c.status}">Cell</td>
+                                <tr>
+                                    <td>Cell</td>
+                                    <td>Cell</td>
+                                    <td>Cell</td>
                                     <td>
-                                        <button class="btn btn-primary waves-effect schedules" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable" th:attr="data-id=${c.id}"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-info waves-effect participants" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable" th:attr="data-id=${c.id}"> <i class="mdi mdi-account-edit mr-1"></i> <span>Detail</span> </button>
-                                    </td>
-                                    <td th:if="${c.status.toString() == 'APPROVED'}">
-                                        <a th:href="@{/invoice(id=${c.id})}">
-                                            <button class="btn btn-success waves-effect schedules" data-bs-toggle="modal" data-bs-target="#exampleModalScrollable"> <i class="mdi mdi-account-edit mr-1"></i> <span>Pay</span> </button>
+                                        <a href="#">
+                                            <button class="btn btn-warning waves-effect"> <i class="mdi mdi-account-edit mr-1"></i> <span>Edit</span> </button>
                                         </a>
-                                    </td>
-                                    <td th:unless="${c.status.toString() == 'APPROVED'}">
-                                        -
+                                        <a href="#">
+                                            <button class="btn btn-danger waves-effect"> <i class="mdi mdi-trash-can mr-1"></i> <span>Delete</span> </button>
+                                        </a>
+
                                     </td>
                                 </tr>
                                 </tbody>
@@ -109,7 +98,8 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">Name</th>
-                                            <th scope="col">Position</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Phone Number</th>
                                         </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -132,7 +122,7 @@
         $('.schedules').on('click', function(){
             let id = $(this).data('id')
             console.log('id = ',id)
-            $.get("http://localhost:8080/rest/schedules?id="+id )
+            $.get("https://www.lotuscourses.online/rest/schedules?id="+id )
                 .done(function( data ) {
                     $("#tableSchedules").find("tbody").empty();
                     var event_data = '';
@@ -152,15 +142,16 @@
         $('.participants').on('click', function(){
             let id = $(this).data('id')
             console.log('id = ',id)
-            $.get("http://localhost:8080/rest/participants?id="+id )
+            $.get("https://www.lotuscourses.online/rest/participants?id="+id )
                 .done(function( data ) {
                     $("#tableParticipants").find("tbody").empty();
                     var event_data = '';
                     $.each(data.data, function(index, value){
                         /*console.log(value);*/
                         event_data += '<tr>';
-                        event_data += '<td>'+value.name+'</td>';
-                        event_data += '<td>'+value.position+'</td>';
+                        event_data += '<td>'+value.user.fullName+'</td>';
+                        event_data += '<td>'+value.user.email+'</td>';
+                        event_data += '<td>'+value.user.mobilePhone+'</td>';
                         event_data += '</tr>';
                     });
                     $("#tableParticipants").append(event_data);

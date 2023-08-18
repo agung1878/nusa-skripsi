@@ -15,6 +15,26 @@ public class CourseRestController {
 
     @Autowired private CourseServices services;
 
+    @PostMapping("/course/approve")
+    public ResponseEntity<BaseResponseDto> postApproveCourse(@RequestParam String id){
+        BaseResponseDto response = new BaseResponseDto();
+        services.setCourseApprove(id);
+        response.setData(null);
+        response.setResponseMessage("SUCCESS");
+        response.setResponseCode("200");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/course/invoice")
+    public ResponseEntity<BaseResponseDto> postCreateInvoice(@RequestParam String id){
+        BaseResponseDto response = new BaseResponseDto();
+        services.createInvoice(id);
+        response.setData(null);
+        response.setResponseMessage("SUCCESS");
+        response.setResponseCode("200");
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/schedules")
     @CrossOrigin
     public ResponseEntity<BaseResponseDto> getSchedules(@RequestParam String id){
